@@ -1,0 +1,9 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=Newsbeuter
+Comment=Terminal wrapper newsbeuter
+Path=/home/leonard/.newsbeuter
+Exec=x-newsbeuter
+Icon=/home/leonard/.local/share/icons/newsbeuter.png

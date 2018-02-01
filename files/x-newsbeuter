@@ -1,0 +1,3 @@
+#!/bin/bash
+
+urxvt -title "Newsbeuter" -icon $HOME/.local/share/icons/newsbeuter.png -e tmuxinator start newsbeuter

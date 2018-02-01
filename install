@@ -1,0 +1,25 @@
+#!/bin/bash
+
+CONFIG_SRC_DIR=$HOME/Documents/configuration/src
+NEWSBEUTER_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+sudo apt-get install newsbeuter
+
+if [ ! -d "$HOME/.newsbeuter" ]; then
+    mkdir "$HOME/.newsbeuter"
+fi
+
+if [ ! -d "$CONFIG_SRC_DIR/.newsbeuter" ]; then
+    git clone https://github.com/CaptainQuirk/.newsbeuter.git "$CONFIG_SRC_DIR/.newsbeuter"
+    ln -s -f "$CONFIG_SRC_DIR/.newsbeuter/config" "$HOME/.newsbeuter/config"
+    ln -s -f "$CONFIG_SRC_DIR/.newsbeuter/urls" "$HOME/.newsbeuter/urls"
+fi
+cd "$CONFIG_SRC_DIR/.newsbeuter" || exit 1
+git pull
+cd - || exit 2
+
+sudo cp --update "$NEWSBEUTER_RECIPE_DIR/files/x-newsbeuter" /usr/local/bin
+
+cp --update "$NEWSBEUTER_RECIPE_DIR/files/newsbeuter.desktop" "$HOME/.local/share/applications"
+ln -s -f "$HOME/.local/share/applications/newsbeuter.desktop" /home/leonard/.config/autostart/newsbeuter.desktop
+cp --update "$NEWSBEUTER_RECIPE_DIR/files/newsbeuter.png" "$HOME/.local/share/icons"
