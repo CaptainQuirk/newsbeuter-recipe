@@ -20,6 +20,7 @@ cd - || exit 2
 
 sudo cp --update "$NEWSBEUTER_RECIPE_DIR/files/x-newsbeuter" /usr/local/bin
 
+cp --update "$NEWSBEUTER_RECIPE_DIR/files/newsbeuter.yml" "$HOME/.config/tmuxinator/newsbeuter.yml"
 cp --update "$NEWSBEUTER_RECIPE_DIR/files/newsbeuter.desktop" "$HOME/.local/share/applications"
 ln -s -f "$HOME/.local/share/applications/newsbeuter.desktop" /home/leonard/.config/autostart/newsbeuter.desktop
 cp --update "$NEWSBEUTER_RECIPE_DIR/files/newsbeuter.png" "$HOME/.local/share/icons"
