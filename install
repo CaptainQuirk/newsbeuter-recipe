@@ -2,6 +2,8 @@
 
 CONFIG_SRC_DIR=$HOME/Documents/configuration/src
 NEWSBEUTER_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DROPBOX_FOLDER="$HOME/Dropbox"
+RUNTIME_CONFIG="$HOME/.newsbeuter"
 
 sudo apt-get install newsbeuter
 
@@ -16,6 +18,11 @@ fi
 cd "$CONFIG_SRC_DIR/.newsbeuter" || exit 1
 git pull
 cd - || exit 2
+
+ln -s -f "$DROPBOX_FOLDER/.config/newsbeuter/cache.db" "$RUNTIME_CONFIG/cache.db"
+ln -s -f "$DROPBOX_FOLDER/.config/newsbeuter/history.cmdline" "$RUNTIME_CONFIG/history.cmdline"
+ln -s -f "$DROPBOX_FOLDER/.config/newsbeuter/history.search" "$RUNTIME_CONFIG/history.search"
+ln -s -f "$DROPBOX_FOLDER/.config/newsbeuter/urls" "$RUNTIME_CONFIG/urls"
 
 sudo cp --update "$NEWSBEUTER_RECIPE_DIR/files/x-newsbeuter" /usr/local/bin
 
