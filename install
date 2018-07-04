@@ -5,7 +5,7 @@ NEWSBEUTER_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DROPBOX_FOLDER="$HOME/Dropbox"
 RUNTIME_CONFIG="$HOME/.newsbeuter"
 
-sudo apt-get install newsbeuter
+shef apt newsbeuter
 
 if [ ! -d "$HOME/.newsbeuter" ]; then
     mkdir "$HOME/.newsbeuter"
