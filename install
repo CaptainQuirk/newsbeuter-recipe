@@ -1,31 +1,28 @@
 #!/bin/bash
 
-CONFIG_SRC_DIR=$HOME/Documents/configuration/src
-NEWSBEUTER_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-DROPBOX_FOLDER="$HOME/Dropbox"
-RUNTIME_CONFIG="$HOME/.newsbeuter"
-
 shef apt newsbeuter
 
-if [ ! -d "$HOME/.newsbeuter" ]; then
-    mkdir "$HOME/.newsbeuter"
-fi
+shef git "Install newsbeuter configuration" \
+    --repository https://github.com/CaptainQuirk/.newsbeuter.git \
+    --destination "$CONFIG_SRC_DIR/.newsbeuter"
 
-if [ ! -d "$CONFIG_SRC_DIR/.newsbeuter" ]; then
-    git clone https://github.com/CaptainQuirk/.newsbeuter.git "$CONFIG_SRC_DIR/.newsbeuter"
-    ln -s -f "$CONFIG_SRC_DIR/.newsbeuter/config" "$HOME/.newsbeuter/config"
-fi
-cd "$CONFIG_SRC_DIR/.newsbeuter" || exit 1
-git pull
-cd - || exit 2
+shef file "Install X wrapper script" \
+    --source "$RECIPE_DIR/files/x-newsbeuter" \
+    --path "/usr/local/bin/x-newsbeuter" \
+    --update \
+    --sudo
 
-ln -s -f "$DROPBOX_FOLDER/.config/newsbeuter/cache.db" "$RUNTIME_CONFIG/cache.db"
-ln -s -f "$DROPBOX_FOLDER/.config/newsbeuter/history.cmdline" "$RUNTIME_CONFIG/history.cmdline"
-ln -s -f "$DROPBOX_FOLDER/.config/newsbeuter/history.search" "$RUNTIME_CONFIG/history.search"
-ln -s -f "$DROPBOX_FOLDER/.config/newsbeuter/urls" "$RUNTIME_CONFIG/urls"
+shef file "Install tmuxinator configuration" \
+    --source "$RECIPE_DIR/files/newsbeuter.yml" \
+    --path "$HOME/.config/tmuxinator/newsbeuter.yml" \
+    --update
 
-sudo cp --update "$NEWSBEUTER_RECIPE_DIR/files/x-newsbeuter" /usr/local/bin
+shef file "Install tmuxinator configuration" \
+    --source "$RECIPE_DIR/files/newsbeuter.desktop"  \
+    --path  "$HOME/.local/share/applications/newsbeuter.desktop"\
+    --update
 
-cp --update "$NEWSBEUTER_RECIPE_DIR/files/newsbeuter.yml" "$HOME/.config/tmuxinator/newsbeuter.yml"
-cp --update "$NEWSBEUTER_RECIPE_DIR/files/newsbeuter.desktop" "$HOME/.local/share/applications"
-cp --update "$NEWSBEUTER_RECIPE_DIR/files/newsbeuter.png" "$HOME/.local/share/icons"
+shef file "Install tmuxinator configuration" \
+    --source "$RECIPE_DIR/files/newsbeuter.png" \
+    --path  "$HOME/.local/share/icons/newsbeuter.png"\
+    --update
